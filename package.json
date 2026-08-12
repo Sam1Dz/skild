@@ -1,0 +1,46 @@
+{
+  "name": "skild",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite dev --port 3000",
+    "generate-routes": "tsr generate",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "biome check",
+    "check:write": "biome check --write",
+    "outdated": "pnpm dlx npm-check-updates --format group -i"
+  },
+  "dependencies": {
+    "@t3-oss/env-core": "^0.13.11",
+    "@tailwindcss/vite": "^4.3.3",
+    "@tanstack/react-devtools": "^0.10.9",
+    "@tanstack/react-form": "^1.33.4",
+    "@tanstack/react-query": "^5.101.4",
+    "@tanstack/react-query-devtools": "^5.101.4",
+    "@tanstack/react-router": "^1.170.25",
+    "@tanstack/react-router-devtools": "^1.167.1",
+    "@tanstack/react-router-ssr-query": "^1.167.1",
+    "@tanstack/react-start": "^1.168.42",
+    "better-auth": "^1.6.26",
+    "nitro": "3.0.260610-beta",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "tailwindcss": "^4.3.3",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.5.7",
+    "@rolldown/plugin-babel": "^0.2.3",
+    "@tanstack/devtools-vite": "^0.8.3",
+    "@tanstack/router-cli": "^1.167.27",
+    "@types/node": "^24.13.3",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "@vitejs/plugin-react": "^6.0.5",
+    "babel-plugin-react-compiler": "^1.0.0",
+    "typescript": "^6.0.3",
+    "vite": "^8.2.1"
+  },
+  "packageManager": "pnpm@11.21.0"
+}
