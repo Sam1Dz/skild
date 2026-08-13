@@ -7,8 +7,10 @@ import {
 	Scripts,
 } from '@tanstack/react-router';
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
+import { AppThemeProvider } from '../integrations/app-theme/provider';
+import { getThemeInitScript } from '../integrations/app-theme/script';
+import { getThemeFn } from '../integrations/app-theme/server';
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools';
-import { getThemeFn } from '../lib/theme';
 import appCss from '../styles/global.css?url';
 
 interface MyRouterContext {
@@ -47,13 +49,11 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang="en" suppressHydrationWarning className={resolvedTheme} data-theme={resolvedTheme}>
 			<head>
-				<ScriptOnce>
-					{`(function(){try{if(${JSON.stringify(theme)}==='system'){var d=window.matchMedia('(prefers-color-scheme: dark)').matches;var r=d?'dark':'light';var el=document.documentElement;el.classList.add(r);el.dataset.theme=r;el.style.colorScheme=r;}}catch(e){}})();`}
-				</ScriptOnce>
+				<ScriptOnce>{getThemeInitScript(theme)}</ScriptOnce>
 				<HeadContent />
 			</head>
 			<body className="bg-surface font-sans">
-				{children}
+				<AppThemeProvider initialTheme={theme}>{children}</AppThemeProvider>
 				<TanStackDevtools
 					config={{
 						position: 'bottom-right',

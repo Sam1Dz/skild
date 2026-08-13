@@ -1,21 +1,5 @@
-import { useRouteContext } from '@tanstack/react-router';
-import { useServerFn } from '@tanstack/react-start';
-import * as React from 'react';
-import { setThemeFn, type Theme } from '@/lib/theme';
-
-function resolveTheme(theme: Theme): 'light' | 'dark' {
-	if (theme !== 'system') return theme;
-	return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-}
-
-function applyTheme(theme: Theme) {
-	const resolved = resolveTheme(theme);
-	const root = document.documentElement;
-	root.classList.remove('light', 'dark');
-	root.classList.add(resolved);
-	root.dataset.theme = resolved;
-	root.style.colorScheme = resolved;
-}
+import { useAppTheme } from '@/integrations/app-theme/provider';
+import type { Theme } from '@/integrations/app-theme/server';
 
 const OPTIONS: Array<{ value: Theme; label: string }> = [
 	{ value: 'light', label: 'Light' },
@@ -24,15 +8,7 @@ const OPTIONS: Array<{ value: Theme; label: string }> = [
 ];
 
 export default function ThemeToggle() {
-	const { theme: initialTheme } = useRouteContext({ from: '__root__' });
-	const [theme, setTheme] = React.useState(initialTheme);
-	const setThemeServer = useServerFn(setThemeFn);
-
-	function handleSelect(next: Theme) {
-		setTheme(next);
-		applyTheme(next);
-		void setThemeServer({ data: next });
-	}
+	const { theme, setTheme } = useAppTheme();
 
 	return (
 		<div className="inline-flex border border-neutral-300 dark:border-neutral-700">
@@ -40,7 +16,7 @@ export default function ThemeToggle() {
 				<button
 					key={value}
 					type="button"
-					onClick={() => handleSelect(value)}
+					onClick={() => setTheme(value)}
 					aria-pressed={theme === value}
 					className={`px-3 py-1.5 font-medium text-sm transition-colors ${
 						theme === value
