@@ -38,5 +38,7 @@ export const setThemeFn = createServerFn({ method: 'POST' })
 			maxAge: 60 * 60 * 24 * 365,
 			path: '/',
 			sameSite: 'lax',
+			httpOnly: true,
+			secure: import.meta.env.PROD,
 		});
 	});

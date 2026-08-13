@@ -1,6 +1,6 @@
 import { useServerFn } from '@tanstack/react-start';
 import * as React from 'react';
-import { setThemeFn, type Theme } from './server';
+import { setThemeFn, type Theme, themeSchema } from './server';
 
 /** A {@link Theme} preference resolved down to an actual color scheme. */
 type ResolvedTheme = 'light' | 'dark';
@@ -105,7 +105,10 @@ export function ThemeProvider({
 	React.useEffect(() => {
 		const channel = new BroadcastChannel(CHANNEL_NAME);
 		channelRef.current = channel;
-		channel.onmessage = (event: MessageEvent<Theme>) => applyTheme(event.data, false);
+		channel.onmessage = (event: MessageEvent<unknown>) => {
+			const parsed = themeSchema.safeParse(event.data);
+			if (parsed.success) applyTheme(parsed.data, false);
+		};
 		return () => channel.close();
 	}, [applyTheme]);
 
