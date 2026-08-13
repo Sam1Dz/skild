@@ -1,4 +1,4 @@
-import { useAppTheme } from '@/integrations/app-theme/provider';
+import { useTheme } from '@/integrations/app-theme/provider';
 import type { Theme } from '@/integrations/app-theme/server';
 
 const OPTIONS: Array<{ value: Theme; label: string }> = [
@@ -8,7 +8,7 @@ const OPTIONS: Array<{ value: Theme; label: string }> = [
 ];
 
 export default function ThemeToggle() {
-	const { theme, setTheme } = useAppTheme();
+	const { theme, setTheme } = useTheme();
 
 	return (
 		<div className="inline-flex border border-neutral-300 dark:border-neutral-700">

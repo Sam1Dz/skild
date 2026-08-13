@@ -7,8 +7,8 @@ import {
 	Scripts,
 } from '@tanstack/react-router';
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
+import { RootProvider } from '@/components/providers/root';
 import { generateSeoMetadata, metaThemeColor } from '../config/site';
-import { AppThemeProvider } from '../integrations/app-theme/provider';
 import { getThemeInitScript } from '../integrations/app-theme/script';
 import { getThemeFn } from '../integrations/app-theme/server';
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools';
@@ -47,7 +47,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 				<HeadContent />
 			</head>
 			<body className="bg-surface font-sans">
-				<AppThemeProvider initialTheme={theme}>{children}</AppThemeProvider>
+				<RootProvider initialTheme={theme}>{children}</RootProvider>
 				<TanStackDevtools
 					config={{
 						position: 'bottom-right',

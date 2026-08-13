@@ -5,7 +5,7 @@ import { setThemeFn, type Theme } from './server';
 /** A {@link Theme} preference resolved down to an actual color scheme. */
 type ResolvedTheme = 'light' | 'dark';
 
-/** Value exposed by {@link AppThemeProvider} via {@link useAppTheme}. */
+/** Value exposed by {@link ThemeProvider} via {@link useTheme}. */
 interface ThemeContextValue {
 	/** The user's raw theme preference, including `'system'`. */
 	theme: Theme;
@@ -51,19 +51,19 @@ function applyWithoutTransition(resolved: ResolvedTheme) {
  * @remarks
  * `initialTheme` should come from {@link getThemeFn} (or the cookie read during
  * SSR) so the client state matches what the server already rendered. Consume the
- * context with {@link useAppTheme}.
+ * context with {@link useTheme}.
  *
  * @example
  * ```tsx
- * <AppThemeProvider initialTheme={initialTheme}>
+ * <ThemeProvider initialTheme={initialTheme}>
  *   <App />
- * </AppThemeProvider>
+ * </ThemeProvider>
  * ```
  *
  * @param props.initialTheme - The theme resolved on the server for the initial render.
  * @param props.children - The subtree that can consume the theme context.
  */
-export function AppThemeProvider({
+export function ThemeProvider({
 	initialTheme,
 	children,
 }: {
@@ -126,13 +126,13 @@ export function AppThemeProvider({
 }
 
 /**
- * Reads the current {@link ThemeContextValue} from the nearest {@link AppThemeProvider}.
+ * Reads the current {@link ThemeContextValue} from the nearest {@link ThemeProvider}.
  *
- * @throws {Error} If called outside of an {@link AppThemeProvider}.
+ * @throws {Error} If called outside of an {@link ThemeProvider}.
  * @returns The current theme, resolved theme, and setter.
  */
-export function useAppTheme() {
+export function useTheme() {
 	const ctx = React.useContext(ThemeContext);
-	if (!ctx) throw new Error('useAppTheme must be used within AppThemeProvider');
+	if (!ctx) throw new Error('useTheme must be used within ThemeProvider');
 	return ctx;
 }
