@@ -7,6 +7,7 @@ import {
 	Scripts,
 } from '@tanstack/react-router';
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
+import { generateSeoMetadata, metaThemeColor } from '../config/site';
 import { AppThemeProvider } from '../integrations/app-theme/provider';
 import { getThemeInitScript } from '../integrations/app-theme/script';
 import { getThemeFn } from '../integrations/app-theme/server';
@@ -19,26 +20,19 @@ interface MyRouterContext {
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
 	beforeLoad: async () => ({ theme: await getThemeFn() }),
-	head: () => ({
-		meta: [
-			{
-				charSet: 'utf-8',
-			},
-			{
-				name: 'viewport',
-				content: 'width=device-width, initial-scale=1',
-			},
-			{
-				title: 'TanStack Start Starter',
-			},
-		],
-		links: [
-			{
-				rel: 'stylesheet',
-				href: appCss,
-			},
-		],
-	}),
+	head: ctx => {
+		const { theme } = ctx.match.context;
+		const { meta, links } = generateSeoMetadata();
+		return {
+			meta: [
+				{ charSet: 'utf-8' },
+				{ name: 'viewport', content: 'width=device-width, initial-scale=1' },
+				...meta,
+				...metaThemeColor(theme === 'dark' ? 'dark' : 'light'),
+			],
+			links: [{ rel: 'stylesheet', href: appCss }, ...links],
+		};
+	},
 	shellComponent: RootDocument,
 });
 
