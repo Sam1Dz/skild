@@ -1,260 +1,130 @@
-Welcome to your new TanStack Start app!
+# Skild
 
-# Getting Started
+**The Registry for Agentic Intelligence.**
 
-To run this application:
+Skild is a route-driven workspace for discovering, publishing, and operating reusable agent capabilities. This repository is the web application: a [TanStack Start](https://tanstack.com/start) project currently in early scaffolding — core plumbing (theming, auth, SEO) is in place, product surfaces are still being built out.
+
+> [!NOTE]
+> This project is under active early-stage setup. Expect the structure and conventions documented here to evolve as real features land.
+
+## Tech Stack
+
+| Layer | Technology |
+| --- | --- |
+| Framework | [TanStack Start](https://tanstack.com/start) (React 19, SSR) on [Vite](https://vitejs.dev/) 8 |
+| Routing | [TanStack Router](https://tanstack.com/router) (file-based, type-safe) |
+| Server | [Nitro](https://nitro.build/) — deploys as a self-contained Node server, or to any Nitro-supported host |
+| Data fetching | [TanStack Query](https://tanstack.com/query) |
+| Forms | [TanStack Form](https://tanstack.com/form) |
+| Auth | [better-auth](https://www.better-auth.com/) (email/password, cookie-based) |
+| Styling | [Tailwind CSS v4](https://tailwindcss.com/) + [HeroUI v3](https://heroui.com/) |
+| Validation / env | [Zod](https://zod.dev/) + [`@t3-oss/env-core`](https://env.t3.gg/) |
+| Tooling | [Biome](https://biomejs.dev/) (lint + format), TypeScript (strict) |
+| Package manager | [pnpm](https://pnpm.io/) `11.21.0` (pinned via `packageManager`) |
+
+## Getting Started
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) (recent LTS)
+- [pnpm](https://pnpm.io/) — install via [Corepack](https://pnpm.io/installation#using-corepack): `corepack enable`
+
+### Installation
 
 ```bash
 pnpm install
+```
+
+### Environment variables
+
+Copy `.env.example` to `.env` and fill in the values:
+
+```bash
+cp .env.example .env
+```
+
+| Variable | Description |
+| --- | --- |
+| `BETTER_AUTH_URL` | Base URL better-auth uses for callbacks/cookies (e.g. `http://localhost:3000`) |
+| `BETTER_AUTH_SECRET` | Secret used to sign sessions — generate with `pnpm dlx @better-auth/cli secret` |
+| `VITE_SITE_URL` | Public site URL, used for canonical links and Open Graph tags |
+
+> [!TIP]
+> better-auth works in stateless mode out of the box. To persist users, wire a database into `src/lib/auth.ts` — see the [better-auth documentation](https://www.better-auth.com/docs/adapters/postgresql) for adapters.
+
+### Run the dev server
+
+```bash
 pnpm dev
 ```
 
-# Building For Production
+The app is served at `http://localhost:3000`.
 
-To build this application for production:
+## Available Scripts
+
+| Command | Description |
+| --- | --- |
+| `pnpm dev` | Start the Vite dev server on port 3000 |
+| `pnpm build` | Build for production |
+| `pnpm preview` | Preview the production build locally |
+| `pnpm generate-routes` | Regenerate `src/routeTree.gen.ts` from the file-based routes |
+| `pnpm check` | Run Biome lint + format checks |
+| `pnpm format` | Auto-fix lint/format issues (`biome check --write --unsafe`) |
+| `pnpm outdated` | List outdated dependencies, grouped |
+
+## Project Structure
+
+```text
+src/
+├── components/
+│   └── providers/      # Composable app-wide providers (RootProvider)
+├── config/
+│   ├── env.ts           # Typed, validated environment variables (@t3-oss/env-core)
+│   └── site.ts           # Site metadata: SEO, Open Graph, JSON-LD, theme color
+├── integrations/
+│   ├── app-theme/        # Light/dark/system theme system (cookie-persisted, SSR-safe)
+│   ├── better-auth/       # Auth UI integration
+│   └── tanstack-query/    # Query client provider + devtools
+├── lib/
+│   ├── auth.ts            # better-auth server instance
+│   ├── auth-client.ts      # better-auth React client
+│   └── utils.ts             # Shared helpers
+├── routes/
+│   ├── __root.tsx           # Root route: HTML shell, head/meta, providers
+│   ├── index.tsx              # Home route
+│   └── api/auth/$.ts           # better-auth catch-all API route
+├── styles/global.css            # Tailwind entry + design tokens
+├── router.tsx                     # Router instance
+└── routeTree.gen.ts                # Generated — do not edit by hand
+```
+
+## Key Features
+
+- **SSR-safe theming** — light/dark/system theme resolved server-side from a cookie (no flash-of-wrong-theme), with client-side niceties layered on top: live OS theme sync, cross-tab sync via `BroadcastChannel`, and transition suppression while switching. See [`src/integrations/app-theme`](src/integrations/app-theme).
+- **Typed environment config** — env vars are validated with Zod and split into `server`/`client` scopes via `@t3-oss/env-core`, so a server-only secret can never leak into client code. See [`src/config/env.ts`](src/config/env.ts).
+- **Centralized SEO/head config** — `src/config/site.ts` generates meta tags, Open Graph, canonical links, `theme-color`, and JSON-LD structured data for any route. See [`src/config/site.ts`](src/config/site.ts).
+- **Auth scaffolding** — email/password auth via better-auth, mounted at `/api/auth/*`, stateless by default with an easy path to add a database.
+
+## Deployment
+
+This project uses Nitro as its server adapter, so the production build is a self-contained Node server:
 
 ```bash
 pnpm build
-```
-
-## Styling
-
-This project uses [Tailwind CSS](https://tailwindcss.com/) for styling.
-
-### Removing Tailwind CSS
-
-If you prefer not to use Tailwind CSS:
-
-1. Remove the demo pages in `src/routes/demo/`
-2. Replace the Tailwind import in `src/styles.css` with your own styles
-3. Remove `tailwindcss()` from the plugins array in `vite.config.ts`
-4. Remove `@tailwindcss/vite` and `tailwindcss` from `package.json`
-
-## Linting & Formatting
-
-This project uses [Biome](https://biomejs.dev/) for linting and formatting. The following scripts are available:
-
-
-```bash
-pnpm lint
-pnpm format
-pnpm check
-```
-
-
-## Deploy with Nitro
-
-This project uses Nitro as a generic server adapter, so it can run on any Node-compatible host.
-
-```bash
-npm run build
 node dist/server/index.mjs
 ```
 
-The build output is a self-contained Node server. To deploy, push the `dist/` directory to your host (Render, Fly.io, your own VPS, etc.) and run the server command above.
+Push the `dist/` directory to any Node-compatible host (Render, Fly.io, a VPS, etc.). For host-specific presets (Vercel, Netlify, Cloudflare, AWS Lambda, ...) and further tuning, see the [Nitro deployment docs](https://v3.nitro.build/deploy).
 
-For host-specific presets (Vercel, Netlify, Cloudflare, AWS Lambda, etc.) and tuning, see https://v3.nitro.build/deploy.
+## Linting & Formatting
 
-
-## Setting up Better Auth
-
-1. Generate and set the `BETTER_AUTH_SECRET` environment variable in your `.env.local`:
-
-   ```bash
-   pnpm dlx @better-auth/cli secret
-   ```
-
-2. Visit the [Better Auth documentation](https://www.better-auth.com) to unlock the full potential of authentication in your app.
-
-### Adding a Database (Optional)
-
-Better Auth can work in stateless mode, but to persist user data, add a database:
-
-```typescript
-// src/lib/auth.ts
-import { betterAuth } from "better-auth";
-import { Pool } from "pg";
-
-export const auth = betterAuth({
-  database: new Pool({
-    connectionString: process.env.DATABASE_URL,
-  }),
-  // ... rest of config
-});
-```
-
-Then run migrations:
+This project uses [Biome](https://biomejs.dev/) with tab indentation, single quotes, and organized imports enforced automatically:
 
 ```bash
-pnpm dlx @better-auth/cli migrate
+pnpm check    # verify
+pnpm format   # fix
 ```
 
+## License
 
-## T3Env
-
-- You can use T3Env to add type safety to your environment variables.
-- Add Environment variables to the `src/env.mjs` file.
-- Use the environment variables in your code.
-
-### Usage
-
-```ts
-import { env } from "@/env";
-
-console.log(env.VITE_APP_TITLE);
-```
-
-
-
-
-
-
-## Routing
-
-This project uses [TanStack Router](https://tanstack.com/router) with file-based routing. Routes are managed as files in `src/routes`.
-
-### Adding A Route
-
-To add a new route to your application just add a new file in the `./src/routes` directory.
-
-TanStack will automatically generate the content of the route file for you.
-
-Now that you have two routes you can use a `Link` component to navigate between them.
-
-### Adding Links
-
-To use SPA (Single Page Application) navigation you will need to import the `Link` component from `@tanstack/react-router`.
-
-```tsx
-import { Link } from "@tanstack/react-router";
-```
-
-Then anywhere in your JSX you can use it like so:
-
-```tsx
-<Link to="/about">About</Link>
-```
-
-This will create a link that will navigate to the `/about` route.
-
-More information on the `Link` component can be found in the [Link documentation](https://tanstack.com/router/v1/docs/framework/react/api/router/linkComponent).
-
-### Using A Layout
-
-In the File Based Routing setup the layout is located in `src/routes/__root.tsx`. Anything you add to the root route will appear in all the routes. The route content will appear in the JSX where you render `{children}` in the `shellComponent`.
-
-Here is an example layout that includes a header:
-
-```tsx
-import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
-
-export const Route = createRootRoute({
-  head: () => ({
-    meta: [
-      { charSet: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { title: 'My App' },
-    ],
-  }),
-  shellComponent: ({ children }) => (
-    <html lang="en">
-      <head>
-        <HeadContent />
-      </head>
-      <body>
-        <header>
-          <nav>
-            <Link to="/">Home</Link>
-            <Link to="/about">About</Link>
-          </nav>
-        </header>
-        {children}
-        <Scripts />
-      </body>
-    </html>
-  ),
-})
-```
-
-More information on layouts can be found in the [Layouts documentation](https://tanstack.com/router/latest/docs/framework/react/guide/routing-concepts#layouts).
-
-## Server Functions
-
-TanStack Start provides server functions that allow you to write server-side code that seamlessly integrates with your client components.
-
-```tsx
-import { createServerFn } from '@tanstack/react-start'
-
-const getServerTime = createServerFn({
-  method: 'GET',
-}).handler(async () => {
-  return new Date().toISOString()
-})
-
-// Use in a component
-function MyComponent() {
-  const [time, setTime] = useState('')
-  
-  useEffect(() => {
-    getServerTime().then(setTime)
-  }, [])
-  
-  return <div>Server time: {time}</div>
-}
-```
-
-## API Routes
-
-You can create API routes by using the `server` property in your route definitions:
-
-```tsx
-import { createFileRoute } from '@tanstack/react-router'
-import { json } from '@tanstack/react-start'
-
-export const Route = createFileRoute('/api/hello')({
-  server: {
-    handlers: {
-      GET: () => json({ message: 'Hello, World!' }),
-    },
-  },
-})
-```
-
-## Data Fetching
-
-There are multiple ways to fetch data in your application. You can use TanStack Query to fetch data from a server. But you can also use the `loader` functionality built into TanStack Router to load the data for a route before it's rendered.
-
-For example:
-
-```tsx
-import { createFileRoute } from '@tanstack/react-router'
-
-export const Route = createFileRoute('/people')({
-  loader: async () => {
-    const response = await fetch('https://swapi.dev/api/people')
-    return response.json()
-  },
-  component: PeopleComponent,
-})
-
-function PeopleComponent() {
-  const data = Route.useLoaderData()
-  return (
-    <ul>
-      {data.results.map((person) => (
-        <li key={person.name}>{person.name}</li>
-      ))}
-    </ul>
-  )
-}
-```
-
-Loaders simplify your data fetching logic dramatically. Check out more information in the [Loader documentation](https://tanstack.com/router/latest/docs/framework/react/guide/data-loading#loader-parameters).
-
-
-
-# Learn More
-
-You can learn more about all of the offerings from TanStack in the [TanStack documentation](https://tanstack.com).
-
-For TanStack Start specific documentation, visit [TanStack Start](https://tanstack.com/start).
+[MIT](LICENSE) © 2026 Pratama "Sam1Dz" Dimas
