@@ -1,6 +1,6 @@
 ---
 allowed-tools: Bash(git add:*), Bash(git status:*), Bash(git commit:*), Bash(git diff:*), Bash(git log:*)
-argument-hint: [message] | --amend
+argument-hint: [message]
 description: Create well-formatted commits with conventional commit format and emoji
 ---
 
@@ -19,9 +19,9 @@ Create well-formatted commit: $ARGUMENTS
 ## What This Command Does
 
 1. Checks which files are staged with `git status`
-2. If 0 files are staged, automatically adds all modified and new files with `git add`
-3. Performs a `git diff` to understand what changes are being committed
-4. Analyzes the diff to determine if multiple distinct logical changes are present
+2. If 0 files are staged, stops and asks the user to stage the intended paths — never stages files automatically
+3. Performs a `git diff --cached` to understand what changes are being committed
+4. Analyzes the staged diff to determine if multiple distinct logical changes are present
 5. If multiple distinct changes are detected, suggests breaking the commit into multiple smaller commits
 6. For each commit (or the single commit if not split), creates a commit message using emoji conventional commit format
 
@@ -30,7 +30,7 @@ Create well-formatted commit: $ARGUMENTS
 - **Verify before committing**: Ensure code is linted, builds correctly, and documentation is updated
 - **Atomic commits**: Each commit should contain related changes that serve a single purpose
 - **Split large changes**: If changes touch multiple concerns, split them into separate commits
-- **Conventional commit format**: Use the format `<type>: <description>` where type is one of:
+- **Conventional commit format**: Use the format `<emoji> <type>: <description>` (see the emoji table below), where `type` is one of the core Conventional Commit types:
   - `feat`: A new feature
   - `fix`: A bug fix
   - `docs`: Documentation changes
@@ -41,7 +41,7 @@ Create well-formatted commit: $ARGUMENTS
   - `chore`: Changes to the build process, tools, etc.
 - **Present tense, imperative mood**: Write commit messages as commands (e.g., "add feature" not "added feature")
 - **Concise first line**: Keep the first line under 72 characters
-- **Emoji**: Each commit type is paired with an appropriate emoji:
+- **Emoji**: Each commit is prefixed with the emoji that best matches its intent. The core types above map to a primary emoji (✨ `feat`, 🐛 `fix`, 📝 `docs`, 💄 `style`, ♻️ `refactor`, ⚡️ `perf`, ✅ `test`, 🔧 `chore`); the rest of this table adds finer-grained gitmoji for common special cases (e.g. a security fix vs. a typo fix are both `fix`, just with a different emoji) and a few additional non-Conventional-Commit types (`ci`, `revert`, `wip`, `ui`, `db`, `assets`, `experiment`) used only when none of the core types fit. **Selection rule**: if the change matches one of the special-case rows below (e.g. a security fix, a typo fix, a critical hotfix), use that more specific emoji; otherwise fall back to the primary emoji for the type. When more than one special case still applies, pick the one that best describes *why* the change was made, not just its type:
   - ✨ `feat`: New feature
   - 🐛 `fix`: Bug fix
   - 📝 `docs`: Documentation
@@ -152,7 +152,7 @@ Example of splitting commits:
 
 - **Never add `Co-authored-by` trailers** — do not append any `Co-authored-by` line to any commit message, under any circumstances
 - If specific files are already staged, the command will only commit those files
-- If no files are staged, it will automatically stage all modified and new files
+- If no files are staged, the command stops and asks you to stage the intended paths — it will not stage files on its own
 - The commit message will be constructed based on the changes detected
 - Before committing, the command will review the diff to identify if multiple commits would be more appropriate
 - If suggesting multiple commits, it will help you stage and commit the changes separately

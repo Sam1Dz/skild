@@ -7,8 +7,10 @@
     "generate-routes": "tsr generate",
     "build": "vite build",
     "preview": "vite preview",
+    "start": "node .output/server/index.mjs",
     "check": "biome check",
-    "format": "biome check --write --unsafe",
+    "format": "biome check --write",
+    "format:unsafe": "biome check --write --unsafe",
     "outdated": "pnpm dlx npm-check-updates --format group -i"
   },
   "dependencies": {
@@ -34,7 +36,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.5.8",
+    "@biomejs/biome": "2.5.8",
     "@rolldown/plugin-babel": "^0.2.3",
     "@tanstack/devtools-vite": "^0.8.3",
     "@tanstack/router-cli": "^1.167.27",

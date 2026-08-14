@@ -1,5 +1,6 @@
 import { useServerFn } from '@tanstack/react-start';
 import * as React from 'react';
+import { getThemeColor } from '@/config/site';
 import { setThemeFn, type Theme, themeSchema } from './server';
 
 /** A {@link Theme} preference resolved down to an actual color scheme. */
@@ -25,13 +26,19 @@ function getSystemTheme(): ResolvedTheme {
 	return window.matchMedia(DARK_QUERY).matches ? 'dark' : 'light';
 }
 
-/** Applies the resolved theme to `<html>` via class, `data-theme`, and `color-scheme`. */
+/**
+ * Applies the resolved theme to `<html>` via class, `data-theme`, and
+ * `color-scheme`, and keeps the `theme-color` meta tag in sync.
+ */
 function applyToDom(resolved: ResolvedTheme) {
 	const root = document.documentElement;
 	root.classList.remove('light', 'dark');
 	root.classList.add(resolved);
 	root.dataset.theme = resolved;
 	root.style.colorScheme = resolved;
+	document
+		.querySelector('meta[name="theme-color"]')
+		?.setAttribute('content', getThemeColor(resolved));
 }
 
 /** Swaps the DOM theme without letting unrelated CSS transitions (hover states, etc.) animate along with it. */

@@ -65,11 +65,13 @@ The app is served at `http://localhost:3000`.
 | Command | Description |
 | --- | --- |
 | `pnpm dev` | Start the Vite dev server on port 3000 |
-| `pnpm build` | Build for production |
+| `pnpm build` | Build for production (outputs to `.output/`) |
+| `pnpm start` | Run the production build (`node .output/server/index.mjs`) |
 | `pnpm preview` | Preview the production build locally |
 | `pnpm generate-routes` | Regenerate `src/routeTree.gen.ts` from the file-based routes |
 | `pnpm check` | Run Biome lint + format checks |
-| `pnpm format` | Auto-fix lint/format issues (`biome check --write --unsafe`) |
+| `pnpm format` | Auto-fix lint/format issues (safe fixes only) |
+| `pnpm format:unsafe` | Auto-fix lint/format issues, including unsafe fixes (review the diff) |
 | `pnpm outdated` | List outdated dependencies, grouped |
 
 ## Project Structure
@@ -111,10 +113,10 @@ This project uses Nitro as its server adapter, so the production build is a self
 
 ```bash
 pnpm build
-node dist/server/index.mjs
+pnpm start
 ```
 
-Push the `dist/` directory to any Node-compatible host (Render, Fly.io, a VPS, etc.). For host-specific presets (Vercel, Netlify, Cloudflare, AWS Lambda, ...) and further tuning, see the [Nitro deployment docs](https://v3.nitro.build/deploy).
+Push the `.output/` directory to any Node-compatible host (Render, Fly.io, a VPS, etc.). For host-specific presets (Vercel, Netlify, Cloudflare, AWS Lambda, ...) and further tuning, see the [Nitro deployment docs](https://v3.nitro.build/deploy).
 
 ## Linting & Formatting
 

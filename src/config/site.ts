@@ -49,8 +49,10 @@ export function generateSeoMetadata(meta: SeoMetadata = {}) {
 	};
 }
 
-export function metaThemeColor(resolvedTheme: Exclude<Theme, 'system'>) {
-	const themeColor = siteConfig.themeColor[resolvedTheme ?? 'light'];
+export function getThemeColor(resolvedTheme: Exclude<Theme, 'system'>) {
+	return siteConfig.themeColor[resolvedTheme];
+}
 
-	return [{ name: 'theme-color', content: themeColor }];
+export function metaThemeColor(resolvedTheme: Exclude<Theme, 'system'>) {
+	return [{ name: 'theme-color', content: getThemeColor(resolvedTheme) }];
 }

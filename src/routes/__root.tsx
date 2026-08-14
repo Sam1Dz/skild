@@ -8,7 +8,7 @@ import {
 } from '@tanstack/react-router';
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
 import { RootProvider } from '@/components/providers/root';
-import { generateSeoMetadata, metaThemeColor } from '../config/site';
+import { generateSeoMetadata, getThemeColor, metaThemeColor } from '../config/site';
 import { getThemeInitScript } from '../integrations/app-theme/script';
 import { getThemeFn } from '../integrations/app-theme/server';
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools';
@@ -43,7 +43,12 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang="en" suppressHydrationWarning className={resolvedTheme} data-theme={resolvedTheme}>
 			<head>
-				<ScriptOnce>{getThemeInitScript(theme)}</ScriptOnce>
+				<ScriptOnce>
+					{getThemeInitScript(theme, {
+						light: getThemeColor('light'),
+						dark: getThemeColor('dark'),
+					})}
+				</ScriptOnce>
 				<HeadContent />
 			</head>
 			<body className="bg-surface font-sans">
