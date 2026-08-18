@@ -285,3 +285,20 @@
 	--warning: oklch(92.36% 0.1863 102.13);
 	--warning-foreground: oklch(15% 0.03 102.13);
 }
+
+@layer base {
+	body {
+		@apply bg-surface font-sans;
+	}
+}
+
+@utility bg-diagonal-pattern {
+	background-color: var(--background);
+	background-image: repeating-linear-gradient(
+		-45deg,
+		var(--secondary) 0,
+		var(--secondary) 1px,
+		transparent 1px,
+		transparent 12px
+	);
+}

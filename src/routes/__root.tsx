@@ -7,6 +7,8 @@ import {
 	Scripts,
 } from '@tanstack/react-router';
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
+import type React from 'react';
+import AppHeader from '@/components/layout/header';
 import { RootProvider } from '@/components/providers/root';
 import { generateSeoMetadata, getThemeColor, metaThemeColor } from '../config/site';
 import { getThemeInitScript } from '../integrations/app-theme/script';
@@ -36,7 +38,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 	shellComponent: RootDocument,
 });
 
-function RootDocument({ children }: { children: React.ReactNode }) {
+function RootDocument({ children }: React.PropsWithChildren) {
 	const { theme } = Route.useRouteContext();
 	const resolvedTheme = theme === 'system' ? undefined : theme;
 
@@ -51,8 +53,19 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 				</ScriptOnce>
 				<HeadContent />
 			</head>
-			<body className="bg-surface font-sans">
-				<RootProvider initialTheme={theme}>{children}</RootProvider>
+			<body>
+				<RootProvider initialTheme={theme}>
+					<div className="relative flex min-h-screen flex-col">
+						<div className="pointer-events-none fixed inset-0 z-0 bg-diagonal-pattern" />
+
+						<div className="relative z-10 flex flex-1 flex-col">
+							<AppHeader />
+
+							{children}
+						</div>
+					</div>
+				</RootProvider>
+
 				<TanStackDevtools
 					config={{
 						position: 'bottom-right',
