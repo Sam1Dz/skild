@@ -1,9 +1,10 @@
 import { Button, Chip } from '@heroui/react';
 import { Icon } from '@iconify-icon/react';
+import MobileDrawer from './mobile-drawer';
 
-function AppHeader() {
+export default function AppHeader() {
 	return (
-		<header className="sticky top-0 z-40 w-full border-border border-b bg-(--background)/85 backdrop-blur-md transition-colors duration-200">
+		<header className="sticky top-0 z-50 w-full border-border border-b bg-surface/85 backdrop-blur-md transition-colors duration-200">
 			<div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
 				<div className="flex items-center gap-6 md:gap-8">
 					<a
@@ -39,13 +40,9 @@ function AppHeader() {
 					<Button variant="ghost" size="sm" isIconOnly>
 						<Icon icon="lucide:sun-moon" width={21} height={21} />
 					</Button>
-					<Button variant="ghost" size="sm" isIconOnly>
-						<Icon icon="gravity-ui:bars" width={21} height={21} className="inline-flex md:hidden" />
-					</Button>
+					<MobileDrawer />
 				</div>
 			</div>
 		</header>
 	);
 }
-
-export default AppHeader;

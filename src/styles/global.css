@@ -245,8 +245,12 @@
 
 	/* Font Family */
 	/* Make sure to load Space Grotesk and JetBrains Mono fonts in your app */
-	--font-sans: "Space Grotesk Variable", sans-serif;
-	--font-mono: "JetBrains Mono Variable", monospace;
+	--font-sans:
+		"Space Grotesk Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+		Arial, sans-serif;
+	--font-mono:
+		"JetBrains Mono Variable", ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo,
+		Monaco, "Courier New", monospace;
 }
 
 .dark,
@@ -293,12 +297,12 @@
 }
 
 @utility bg-diagonal-pattern {
-	background-color: var(--background);
 	background-image: repeating-linear-gradient(
 		-45deg,
-		var(--secondary) 0,
-		var(--secondary) 1px,
+		var(--separator) 0,
+		var(--separator) 1px,
 		transparent 1px,
 		transparent 12px
 	);
+	opacity: 0.45;
 }
