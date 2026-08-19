@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "start": "node .output/server/index.mjs",
     "check": "biome check",
-    "format": "biome check --write --unsafe",
+    "format": "biome check --write",
     "outdated": "pnpm dlx npm-check-updates --format group -i"
   },
   "dependencies": {
@@ -23,11 +23,11 @@
     "@tanstack/react-form": "^1.33.5",
     "@tanstack/react-query": "^5.101.4",
     "@tanstack/react-query-devtools": "^5.101.4",
-    "@tanstack/react-router": "^1.170.29",
+    "@tanstack/react-router": "^1.170.30",
     "@tanstack/react-router-devtools": "^1.167.1",
     "@tanstack/react-router-ssr-query": "^1.167.1",
-    "@tanstack/react-start": "^1.168.46",
-    "better-auth": "^1.6.29",
+    "@tanstack/react-start": "^1.168.47",
+    "better-auth": "^1.7.1",
     "nitro": "3.0.260610-beta",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
@@ -35,11 +35,11 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.5.8",
+    "@biomejs/biome": "2.5.9",
     "@iconify-icon/react": "^3.0.3",
     "@rolldown/plugin-babel": "^0.2.3",
     "@tanstack/devtools-vite": "^0.8.3",
-    "@tanstack/router-cli": "^1.167.30",
+    "@tanstack/router-cli": "^1.167.31",
     "@types/node": "^24.13.3",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
@@ -48,5 +48,5 @@
     "typescript": "^6.0.3",
     "vite": "^8.2.1"
   },
-  "packageManager": "pnpm@11.21.0"
+  "packageManager": "pnpm@11.22.0"
 }
