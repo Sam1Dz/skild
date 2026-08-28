@@ -1,11 +1,7 @@
-import { Button, Chip, Drawer, useOverlayState } from '@heroui/react';
+import { Button, Chip, Drawer, Separator, useOverlayState } from '@heroui/react';
 import { Icon } from '@iconify-icon/react';
 import * as React from 'react';
-
-const NAV_ITEMS = [
-	{ href: '#explore', label: 'Explore Skills' },
-	{ href: '#saved', label: 'Saved Skills' },
-] as const;
+import { navRoute } from '@/config/route';
 
 export default function MobileDrawer() {
 	const mobileMenu = useOverlayState();
@@ -23,19 +19,19 @@ export default function MobileDrawer() {
 				className="top-16 h-auto"
 			>
 				<Drawer.Content placement="top" className="h-auto overflow-hidden">
-					<Drawer.Dialog>
-						<Drawer.Body>
+					<Drawer.Dialog className="bg-surface/85 p-4">
+						<Drawer.Body className="p-0">
 							<nav className="flex flex-col">
-								{NAV_ITEMS.map((item, index) => (
+								{navRoute.map((item, index) => (
 									<a
 										key={item.href}
 										href={item.href}
 										onClick={mobileMenu.close}
-										className={`flex items-center justify-between py-2.5 font-medium text-foreground text-sm transition-colors hover:text-accent ${
-											index > 0 ? 'border-separator border-t pt-4' : ''
+										className={`typography--body-sm flex items-center justify-between py-1 font-medium transition-colors hover:text-accent ${
+											index > 0 ? 'mt-4' : ''
 										}`}
 									>
-										<span>{item.label}</span>
+										<span>{item.label.mobile}</span>
 										{item.href === '#saved' && (
 											<Chip className="font-mono" color="accent">
 												3
@@ -45,9 +41,11 @@ export default function MobileDrawer() {
 								))}
 							</nav>
 						</Drawer.Body>
-						<Drawer.Footer className="border-separator border-t pt-3">
-							<Button fullWidth onPress={mobileMenu.close}>
-								Log In
+						<Separator className="mt-3" />
+						<Drawer.Footer className="pt-3">
+							<Button fullWidth onPress={mobileMenu.close} size="sm">
+								<Icon icon="gravity-ui:arrow-right-to-square" width={18} height={18} />
+								Sign In
 							</Button>
 						</Drawer.Footer>
 						<Drawer.Handle />
