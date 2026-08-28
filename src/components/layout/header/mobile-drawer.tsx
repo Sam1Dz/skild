@@ -9,7 +9,7 @@ export default function MobileDrawer() {
 	return (
 		<React.Fragment>
 			<Button variant="ghost" size="sm" isIconOnly className="md:hidden" onPress={mobileMenu.open}>
-				<Icon icon="gravity-ui:bars" width={21} height={21} />
+				<Icon icon="gravity-ui:bars" width={16} height={16} />
 			</Button>
 
 			<Drawer.Backdrop

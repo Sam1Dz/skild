@@ -1,9 +1,24 @@
 import { Button, Chip } from '@heroui/react';
 import { Icon } from '@iconify-icon/react';
 import { navRoute } from '@/config/route';
+import { useTheme } from '@/integrations/app-theme/provider';
+import type { Theme } from '@/integrations/app-theme/server';
 import MobileDrawer from './mobile-drawer';
 
+const themeColor: Record<Theme, Theme> = {
+	light: 'dark',
+	dark: 'system',
+	system: 'light',
+};
+const themeIcon: Record<Theme, string> = {
+	light: 'gravity-ui:sun',
+	dark: 'gravity-ui:moon',
+	system: 'lucide:sun-moon',
+};
+
 export default function AppHeader() {
+	const { theme, setTheme } = useTheme();
+
 	return (
 		<header className="sticky top-0 z-50 w-full border-border border-b bg-background/15 backdrop-blur-md transition-colors duration-200">
 			<div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -40,9 +55,17 @@ export default function AppHeader() {
 					<Button variant="outline" size="sm" className="hidden md:inline-flex">
 						Sign In
 					</Button>
-					<Button variant="ghost" size="sm" isIconOnly>
-						<Icon icon="lucide:sun-moon" width={21} height={21} />
+
+					<Button
+						variant="ghost"
+						size="sm"
+						isIconOnly
+						onPress={() => setTheme(themeColor[theme])}
+						aria-label={`Switch theme (current: ${theme})`}
+					>
+						<Icon icon={themeIcon[theme]} width={16} height={16} />
 					</Button>
+
 					<MobileDrawer />
 				</div>
 			</div>
