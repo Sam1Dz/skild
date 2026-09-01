@@ -45,7 +45,10 @@ export function generateSeoMetadata(meta: SeoMetadata = {}) {
 				},
 			},
 		],
-		links: [{ rel: 'canonical', href: url }],
+		links: [
+			{ rel: 'canonical', href: url },
+			{ rel: 'icon', href: '/favicon.ico', sizes: 'any' },
+		],
 	};
 }
 
