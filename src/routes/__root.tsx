@@ -8,6 +8,7 @@ import {
 } from '@tanstack/react-router';
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
 import type React from 'react';
+import AppFooter from '@/components/layout/footer';
 import AppHeader from '@/components/layout/header';
 import { RootProvider } from '@/components/providers/root';
 import { generateSeoMetadata, getThemeColor, metaThemeColor } from '../config/site';
@@ -62,6 +63,8 @@ function RootDocument({ children }: React.PropsWithChildren) {
 							<AppHeader />
 
 							{children}
+
+							<AppFooter />
 						</div>
 					</div>
 				</RootProvider>
