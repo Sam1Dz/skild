@@ -47,7 +47,11 @@ export function generateSeoMetadata(meta: SeoMetadata = {}) {
 		],
 		links: [
 			{ rel: 'canonical', href: url },
-			{ rel: 'icon', href: '/favicon.ico', sizes: 'any' },
+			{ rel: 'icon', href: '/favicon/favicon.ico', sizes: 'any' },
+			{ rel: 'icon', type: 'image/svg+xml', href: '/favicon/favicon.svg' },
+			{ rel: 'icon', type: 'image/png', href: '/favicon/favicon-96x96.png', sizes: '96x96' },
+			{ rel: 'apple-touch-icon', href: '/favicon/apple-touch-icon.png' },
+			{ rel: 'manifest', href: '/favicon/site.webmanifest' },
 		],
 	};
 }
