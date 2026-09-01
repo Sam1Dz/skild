@@ -7,8 +7,8 @@ export default function AppFooter() {
 
 			<div className="relative z-10 mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
 				<div className="typography--body-xs flex flex-col items-center justify-between gap-4 text-muted sm:flex-row">
-					<div className="group flex items-center gap-2.5 rounded focus:outline-none focus:ring-2 focus:ring-focus">
-						<div className="sm-radius flex h-6 w-6 items-center justify-center">
+					<div className="group flex items-center gap-2.5 rounded">
+						<div className="flex h-6 w-6 items-center justify-center rounded-sm">
 							<img src="/logo/skild-logo.svg" alt="" className="h-full w-full object-contain" />
 						</div>
 						<span className="typography--h6">Skilled</span>

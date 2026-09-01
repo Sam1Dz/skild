@@ -56,13 +56,22 @@ function RootDocument({ children }: React.PropsWithChildren) {
 			</head>
 			<body>
 				<RootProvider initialTheme={theme}>
-					<div className="relative flex min-h-screen flex-col">
+					<a
+						href="#main-content"
+						className="sr-only rounded bg-surface px-4 py-2 focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:outline-none focus:ring-2 focus:ring-focus"
+					>
+						Skip to content
+					</a>
+
+					<div className="relative flex min-h-dvh flex-col">
 						<div className="pointer-events-none fixed inset-0 z-0 bg-diagonal-pattern" />
 
 						<div className="relative z-10 flex flex-1 flex-col">
 							<AppHeader />
 
-							{children}
+							<main id="main-content" className="flex flex-1 flex-col">
+								{children}
+							</main>
 
 							<AppFooter />
 						</div>

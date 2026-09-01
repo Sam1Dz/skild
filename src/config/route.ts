@@ -5,6 +5,7 @@ export const navRoute = [
 			mobile: 'Explore Skills',
 		},
 		href: '#explore',
+		// TODO: gate behind auth once login flow is wired
 		isLoginRequired: false,
 	},
 	{
@@ -13,6 +14,7 @@ export const navRoute = [
 			mobile: 'Saved Skills',
 		},
 		href: '#saved',
+		// TODO: gate behind auth once login flow is wired
 		isLoginRequired: true,
 	},
 ];

@@ -1,11 +1,12 @@
 import { Button, Chip } from '@heroui/react';
 import { Icon } from '@iconify-icon/react';
+import { Link } from '@tanstack/react-router';
 import { navRoute } from '@/config/route';
 import { useTheme } from '@/integrations/app-theme/provider';
 import type { Theme } from '@/integrations/app-theme/server';
 import MobileDrawer from './mobile-drawer';
 
-const themeColor: Record<Theme, Theme> = {
+const themeCycle: Record<Theme, Theme> = {
 	light: 'dark',
 	dark: 'system',
 	system: 'light',
@@ -23,17 +24,17 @@ export default function AppHeader() {
 		<header className="sticky top-0 z-50 w-full border-border border-b bg-background/15 backdrop-blur-md transition-colors duration-200">
 			<div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
 				<div className="flex items-center gap-6 md:gap-8">
-					<a
-						href="#home"
-						className="group flex items-center gap-2.5 rounded focus:outline-none focus:ring-2 focus:ring-focus"
-					>
-						<div className="sm-radius flex h-7 w-7 items-center justify-center">
+					<Link to="/" className="group flex items-center gap-2.5 rounded">
+						<div className="flex h-7 w-7 items-center justify-center rounded-sm">
 							<img src="/logo/skild-logo.svg" alt="" className="h-full w-full object-contain" />
 						</div>
 						<span className="typography--h4">Skilled</span>
-					</a>
+					</Link>
 
-					<nav className="typography--body-sm hidden items-center gap-6 font-medium md:flex">
+					<nav
+						aria-label="Main navigation"
+						className="typography--body-sm hidden items-center gap-6 font-medium md:flex"
+					>
 						{navRoute.map(item => (
 							<a
 								key={item.href}
@@ -42,6 +43,7 @@ export default function AppHeader() {
 							>
 								<span>{item.label.desktop}</span>
 								{item.href === '#saved' && (
+									// TODO: replace with live saved-skills count once auth/data is wired
 									<Chip className="font-mono" color="accent">
 										3
 									</Chip>
@@ -60,7 +62,7 @@ export default function AppHeader() {
 						variant="ghost"
 						size="sm"
 						isIconOnly
-						onPress={() => setTheme(themeColor[theme])}
+						onPress={() => setTheme(themeCycle[theme])}
 						aria-label={`Switch theme (current: ${theme})`}
 					>
 						<Icon icon={themeIcon[theme]} width={16} height={16} />

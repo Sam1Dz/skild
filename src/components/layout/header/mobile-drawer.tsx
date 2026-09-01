@@ -1,14 +1,20 @@
 import { Button, Chip, Drawer, Separator, useOverlayState } from '@heroui/react';
 import { Icon } from '@iconify-icon/react';
-import * as React from 'react';
 import { navRoute } from '@/config/route';
 
 export default function MobileDrawer() {
 	const mobileMenu = useOverlayState();
 
 	return (
-		<React.Fragment>
-			<Button variant="ghost" size="sm" isIconOnly className="md:hidden" onPress={mobileMenu.open}>
+		<>
+			<Button
+				variant="ghost"
+				size="sm"
+				isIconOnly
+				className="md:hidden"
+				onPress={mobileMenu.open}
+				aria-label="Open menu"
+			>
 				<Icon icon="gravity-ui:bars" width={16} height={16} />
 			</Button>
 
@@ -19,9 +25,9 @@ export default function MobileDrawer() {
 				className="top-16 h-auto"
 			>
 				<Drawer.Content placement="top" className="h-auto overflow-hidden">
-					<Drawer.Dialog className="bg-surface/85 p-4">
+					<Drawer.Dialog className="bg-surface/85 p-4" aria-label="Menu">
 						<Drawer.Body className="p-0">
-							<nav className="flex flex-col">
+							<nav aria-label="Mobile navigation" className="flex flex-col">
 								{navRoute.map((item, index) => (
 									<a
 										key={item.href}
@@ -33,6 +39,7 @@ export default function MobileDrawer() {
 									>
 										<span>{item.label.mobile}</span>
 										{item.href === '#saved' && (
+											// TODO: replace with live saved-skills count once auth/data is wired
 											<Chip className="font-mono" color="accent">
 												3
 											</Chip>
@@ -52,6 +59,6 @@ export default function MobileDrawer() {
 					</Drawer.Dialog>
 				</Drawer.Content>
 			</Drawer.Backdrop>
-		</React.Fragment>
+		</>
 	);
 }
