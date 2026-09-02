@@ -7,6 +7,9 @@ import {
 	Scripts,
 } from '@tanstack/react-router';
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
+import type React from 'react';
+import AppFooter from '@/components/layout/footer';
+import AppHeader from '@/components/layout/header';
 import { RootProvider } from '@/components/providers/root';
 import { generateSeoMetadata, getThemeColor, metaThemeColor } from '../config/site';
 import { getThemeInitScript } from '../integrations/app-theme/script';
@@ -36,7 +39,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 	shellComponent: RootDocument,
 });
 
-function RootDocument({ children }: { children: React.ReactNode }) {
+function RootDocument({ children }: React.PropsWithChildren) {
 	const { theme } = Route.useRouteContext();
 	const resolvedTheme = theme === 'system' ? undefined : theme;
 
@@ -51,8 +54,30 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 				</ScriptOnce>
 				<HeadContent />
 			</head>
-			<body className="bg-surface font-sans">
-				<RootProvider initialTheme={theme}>{children}</RootProvider>
+			<body>
+				<RootProvider initialTheme={theme}>
+					<a
+						href="#main-content"
+						className="sr-only rounded bg-surface px-4 py-2 focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:outline-none focus:ring-2 focus:ring-focus"
+					>
+						Skip to content
+					</a>
+
+					<div className="relative flex min-h-dvh flex-col">
+						<div className="pointer-events-none fixed inset-0 z-0 bg-diagonal-pattern" />
+
+						<div className="relative z-10 flex flex-1 flex-col">
+							<AppHeader />
+
+							<main id="main-content" tabIndex={-1} className="flex flex-1 flex-col">
+								{children}
+							</main>
+
+							<AppFooter />
+						</div>
+					</div>
+				</RootProvider>
+
 				<TanStackDevtools
 					config={{
 						position: 'bottom-right',

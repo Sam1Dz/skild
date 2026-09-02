@@ -1,0 +1,55 @@
+{
+  // Mirrors .vscode/settings.json so Zed and VS Code behave the same way.
+  "hard_tabs": true,
+  "tab_size": 2,
+  "preferred_line_length": 100,
+  "format_on_save": "on",
+  "languages": {
+    "JavaScript": {
+      "formatter": { "language_server": { "name": "biome" } },
+      "code_actions_on_format": {
+        "source.organizeImports.biome": true,
+        "source.fixAll.biome": true
+      }
+    },
+    "TypeScript": {
+      "formatter": { "language_server": { "name": "biome" } },
+      "code_actions_on_format": {
+        "source.organizeImports.biome": true,
+        "source.fixAll.biome": true
+      }
+    },
+    "TSX": {
+      "formatter": { "language_server": { "name": "biome" } },
+      "code_actions_on_format": {
+        "source.organizeImports.biome": true,
+        "source.fixAll.biome": true
+      }
+    },
+    "JSON": {
+      "formatter": { "language_server": { "name": "biome" } }
+    },
+    "JSONC": {
+      "formatter": { "language_server": { "name": "biome" } }
+    },
+    "CSS": {
+      "formatter": { "language_server": { "name": "biome" } }
+    }
+  },
+  // Keep Zed's default worktree exclusions, plus hide the generated route
+  // tree (mirrors files.watcherExclude / search.exclude in .vscode/settings.json).
+  "file_scan_exclusions": [
+    "**/.git",
+    "**/.svn",
+    "**/.hg",
+    "**/.jj",
+    "**/.sl",
+    "**/.repo",
+    "**/CVS",
+    "**/.DS_Store",
+    "**/Thumbs.db",
+    "**/.classpath",
+    "**/.settings",
+    "**/routeTree.gen.ts"
+  ]
+}

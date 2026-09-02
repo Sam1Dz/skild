@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40">
+	<defs>
+		<linearGradient id="skild-purple-grad-mark" x1="0%" y1="0%" x2="100%" y2="100%">
+			<stop offset="0%" stop-color="#8b5cf6" />
+			<stop offset="100%" stop-color="#6d28d9" />
+		</linearGradient>
+
+		<mask id="diamond-cutout">
+			<rect x="0" y="0" width="40" height="40" rx="8" ry="8" fill="#ffffff" />
+			<rect
+				x="12"
+				y="12"
+				width="16"
+				height="16"
+				rx="2.5"
+				ry="2.5"
+				fill="#000000"
+				transform="rotate(45 20 20)"
+			/>
+		</mask>
+	</defs>
+
+	<rect
+		x="0"
+		y="0"
+		width="40"
+		height="40"
+		rx="8"
+		ry="8"
+		fill="url(#skild-purple-grad-mark)"
+		mask="url(#diamond-cutout)"
+	/>
+</svg>
