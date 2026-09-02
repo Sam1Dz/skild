@@ -69,7 +69,7 @@ function RootDocument({ children }: React.PropsWithChildren) {
 						<div className="relative z-10 flex flex-1 flex-col">
 							<AppHeader />
 
-							<main id="main-content" className="flex flex-1 flex-col">
+							<main id="main-content" tabIndex={-1} className="flex flex-1 flex-col">
 								{children}
 							</main>
 
