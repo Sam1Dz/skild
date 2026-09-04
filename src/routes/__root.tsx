@@ -58,7 +58,7 @@ function RootDocument({ children }: React.PropsWithChildren) {
 				<RootProvider initialTheme={theme}>
 					<a
 						href="#main-content"
-						className="sr-only rounded bg-surface px-4 py-2 focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:outline-none focus:ring-2 focus:ring-focus"
+						className="sr-only rounded bg-surface px-4 py-2 focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-100 focus:outline-none focus:ring-2 focus:ring-focus"
 					>
 						Skip to content
 					</a>
