@@ -7,7 +7,7 @@ export default function FeaturedSkills() {
 	return (
 		<section
 			id="featured-grid"
-			className="mx-auto w-full max-w-7xl flex-1 px-4 py-12 sm:px-6 lg:px-8"
+			className="mx-auto w-full max-w-7xl flex-1 scroll-mt-20 px-4 py-12 sm:px-6 lg:px-8"
 		>
 			<div className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end">
 				<div>
