@@ -15,7 +15,10 @@ export default function Hero() {
 			</p>
 
 			<div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-				<a href="#featured-grid" className={buttonVariants({ className: 'w-full sm:w-auto' })}>
+				<a
+					href="#featured-grid"
+					className={buttonVariants({ className: 'focus-visible:focus-ring w-full sm:w-auto' })}
+				>
 					<Icon icon="gravity-ui:terminal-line" width={18} height={18} />
 					<span>Browse Registry</span>
 				</a>
