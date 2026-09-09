@@ -1,13 +1,20 @@
 import * as React from 'react';
 
-/** Fallback copy path for browsers without (or that reject) the async Clipboard API. */
-function oldSchoolCopy(text: string) {
+/**
+ * Fallback copy path for browsers without (or that reject) the async Clipboard API.
+ *
+ * @returns Whether `execCommand('copy')` reported success.
+ */
+function oldSchoolCopy(text: string): boolean {
 	const tempTextArea = document.createElement('textarea');
 	tempTextArea.value = text;
 	document.body.appendChild(tempTextArea);
 	tempTextArea.select();
-	document.execCommand('copy');
-	document.body.removeChild(tempTextArea);
+	try {
+		return document.execCommand('copy');
+	} finally {
+		document.body.removeChild(tempTextArea);
+	}
 }
 
 /**
@@ -38,8 +45,7 @@ export function useCopyToClipboard(): [string | null, (value: string) => Promise
 				throw new Error('writeText not supported');
 			}
 		} catch (_e) {
-			oldSchoolCopy(value);
-			setState(value);
+			if (oldSchoolCopy(value)) setState(value);
 		}
 	}, []);
 
