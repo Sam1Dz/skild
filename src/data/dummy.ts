@@ -3,7 +3,7 @@ export interface Skill {
 	author: string;
 	authorAvatar: string;
 	publishedAt: string;
-	tags: string[];
+	tags: [string, ...string[]];
 	title: string;
 	description: string;
 	upvotes: number;
