@@ -49,7 +49,7 @@ Nitro server  ──►  TanStack Start SSR handler  ──►  src/routes/__roo
 ```
 
 - **Head/SEO** is centralized in [`src/config/site.ts`](src/config/site.ts), generating meta tags, Open Graph, canonical links, and JSON-LD per route.
-- **Theming** resolves light/dark/system server-side from a cookie before the first paint (no flash-of-wrong-theme), then syncs live in the browser.
+- **Theming** resolves explicit `light`/`dark` preferences server-side from a cookie; `system` mode has no server-side signal, so it's resolved in the browser via a pre-hydration script instead (still no flash-of-wrong-theme), then syncs live afterward.
 - **Env vars** are parsed and split into `server`/`client` scopes at startup via [`src/config/env.ts`](src/config/env.ts), so secrets can't leak into client bundles.
 
 ## Getting Started
@@ -135,7 +135,7 @@ src/
 
 ## Key Features
 
-- **SSR-safe theming** — light/dark/system theme resolved server-side from a cookie (no flash-of-wrong-theme), with client-side niceties layered on top: live OS theme sync, cross-tab sync via `BroadcastChannel`, and transition suppression while switching. A single toggle button in the header cycles through the three modes. See [`src/integrations/app-theme`](src/integrations/app-theme) and [`src/components/layout/header`](src/components/layout/header).
+- **SSR-safe theming** — explicit `light`/`dark` theme resolved server-side from a cookie; `system` mode is resolved client-side via a pre-hydration script since the server has no OS-preference signal (both paths avoid a flash-of-wrong-theme), with client-side niceties layered on top: live OS theme sync, cross-tab sync via `BroadcastChannel`, and transition suppression while switching. A single toggle button in the header cycles through the three modes. See [`src/integrations/app-theme`](src/integrations/app-theme) and [`src/components/layout/header`](src/components/layout/header).
 - **Registry home page** — a hero section with a CTA that scrolls to a featured-skills grid, rendered from [`SkillCard`](src/components/pages/home/card.tsx) components showing author, tags, description, and upvote/bookmark counts. See [`src/components/pages/home`](src/components/pages/home).
 - **Route-driven navigation** — desktop nav and the mobile drawer both render from one shared `navRoute` config, keeping labels and login-gated items in sync across breakpoints. See [`src/config/route.ts`](src/config/route.ts).
 - **Typed environment config** — env vars are validated with Zod and split into `server`/`client` scopes via `@t3-oss/env-core`, so a server-only secret can never leak into client code. See [`src/config/env.ts`](src/config/env.ts).
